@@ -17,7 +17,8 @@ class BaseClass:
         return WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.close_alert_button)))
 
     def get_close_region_confirmation_button(self):
-        return self.driver.find_element(By.XPATH, self.close_region_confirmation_button)
+        return WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.close_region_confirmation_button)))
+        # return self.driver.find_element(By.XPATH, self.close_region_confirmation_button)
 
     # methods
     def click_close_region_confirmation_button(self):
