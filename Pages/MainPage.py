@@ -23,10 +23,14 @@ class MainPage(BaseClass):
     login_button = "//span[contains(text(), 'Войти')]"
     search_field = "//*[@placeholder = 'Искать по товарам, компаниям, акциям']"
     search_button = "//*[@aria-label='Найти']"
+    profile_button = "//button[contains(text(), 'Профиль')]"
 
     # getters
     def get_catalog_button(self):
         return WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.catalog_button)))
+
+    def get_profile_button(self):
+        return WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.profile_button)))
 
     def get_catalog_categories(self, category_name):
         """Получение списка ссылок на категории и возврат нужной из них"""
@@ -85,8 +89,6 @@ class MainPage(BaseClass):
     # methods
     def open_product_page(self, category_name, sub_category_name):
         """Открытие страницы каталога нужных категории и подкатегории"""
-        # self.click_close_alert_button()          # закрытие приодически появляющейся нотификации
-        # self.click_close_region_confirmation_button()             # закрытие периодически появляющегося конфирмейшен диалога
         self.click_catalog_button()
         print("\nМеню каталога открыто")
         self.click_category(category_name)

@@ -6,7 +6,7 @@ from Utilities.TestData import TestData
 
 class TestGuestUser():
     @staticmethod
-    @pytest.mark.parametrize('data_set',  TestData.random_data_set(2))             # тест прогоняется 2 раза по рандомным товарам
+    @pytest.mark.parametrize('data_set', TestData.random_data_set(2))             # тест прогоняется 2 раза по рандомным товарам
     def test_select_product(set_up_guest, data_set):
         """Тест-кейс: выбор продукта, добавление его в корзину, проверка правильного отображения в корзине и на странице
         покупки"""

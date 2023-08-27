@@ -1,5 +1,7 @@
 import datetime
 import os
+import time
+
 import pytest
 from selenium import webdriver
 
@@ -13,17 +15,17 @@ from webdriver_manager.chrome import ChromeDriverManager
 @pytest.fixture()
 def set_up_logged():
     driver_service = Service(ChromeDriverManager().install())
-    driver = webdriver.Chrome(service=driver_service)
+    options = webdriver.ChromeOptions()
+    options.add_experimental_option("prefs", {"profile.default_content_setting_values.notifications": 2})
+    driver = webdriver.Chrome(service=driver_service, options=options)
     driver.maximize_window()
     driver.get(Settings.base_url)
 
     mpg = MainPage(driver)
+    mpg.click_close_region_confirmation_button()
     mpg.enter_login_modal()\
        .log_in_application(Settings.test_email, Settings.test_password)  # логин в систему с данными тестового пользователя
-
-    bc = BaseClass(driver)
-    bc.click_close_alert_button()
-    bc.click_close_region_confirmation_button()
+    mpg.get_profile_button()
 
     yield driver
 
@@ -38,13 +40,14 @@ def set_up_logged():
 
 @pytest.fixture()
 def set_up_guest():
-    driver = webdriver.Chrome()
+    driver_service = Service(ChromeDriverManager().install())
+    options = webdriver.ChromeOptions()
+    options.add_experimental_option("prefs", {"profile.default_content_setting_values.notifications": 2})
+    driver = webdriver.Chrome(service=driver_service, options=options)
     driver.maximize_window()
     driver.get(Settings.base_url)
-
-    bc = BaseClass(driver)
-    # bc.click_close_alert_button()
-    bc.click_close_region_confirmation_button()
+    mpg = MainPage(driver)
+    mpg.click_close_region_confirmation_button()
 
     yield driver
 

@@ -5,12 +5,12 @@ class TestData:
     set1 = {"sub_category": "Насосы",
             "category": "Строительство и ремонт",
             "times": 3,
-            "price_low": "100",
-            "price_high": "1000",
-            "product_id": "242560351",
-            "product_price": 770,
-            "product_name": 'Насос поверхностный ДЖИЛЕКС "Джамбо" 60/35 Ч',
-            "additional_filters": ['джамбо', '620 Вт']}
+            "price_low": "1000",
+            "price_high": "6000",
+            "product_id": "123750536",
+            "product_price": 2888,
+            "product_name": 'Насос вибрационный, погружной &quot;Ручеек 1&quot; 25 м. верхний забор, БВ-0.12-40-У5',
+            "additional_filters": ['Техноприбор', '225 Вт']}
 
     set2 = {"sub_category": "Крепежные изделия",
             "category": "Материалы",
@@ -28,31 +28,21 @@ class TestData:
             "price_low": "100",
             "price_high": "10000",
             "product_id": "198477927",
-            "product_price": 100,
+            "product_price": 116,
             "product_name": 'Пленка Oracal МТ95 (F099, 500)',
             "additional_filters": None}
 
     set4 = {"sub_category": "Весы",
             "category": "Оборудование",
-            "times": 10,
-            "price_low": "1000",
-            "price_high": "2000",
-            "product_id": "175110590",
-            "product_price": 1390,
-            "product_name": 'Набор гирек для калибровки (500 гр.)',
-            "additional_filters": ["Китай"]}
+            "times": 1,
+            "price_low": "3000",
+            "price_high": "5000",
+            "product_id": "163989833",
+            "product_price": 3100,
+            "product_name": 'Торговые весы Foodatlas 40кг/2гр ВТ-982S',
+            "additional_filters": ["Россия"]}
 
-    set5 = {"sub_category": "Смесители",
-            "category": "Строительство и ремонт",
-            "times": 5,
-            "price_low": "0",
-            "price_high": "100000",
-            "product_id": "214999336",
-            "product_price": 2355,
-            "product_name": 'Смеситель д/раковины MAGNUS 8400',
-            "additional_filters": ['однорычажный', 'встраиваемый', 'шаровый', 'сталь', 'аэратор', 'гибкая', 'Magnus']}
-
-    data_sets = [set1, set2, set3, set4, set5]
+    data_sets = [set1, set2, set3, set4]
 
     @staticmethod
     def random_data_set(quantity):

@@ -30,7 +30,7 @@ class BaseClass:
     def click_close_alert_button(self):
         """Нажатие на кнопку закрытия поп-апа, всплывающего периодически"""
         try:
-            WebDriverWait(self.driver, 4).until(EC.frame_to_be_available_and_switch_to_it("fl-297849"))
+            WebDriverWait(self.driver, 6).until(EC.frame_to_be_available_and_switch_to_it("fl-714756"))
             self.get_close_alert_button().click()
             self.driver.switch_to.parent_frame()
         except TimeoutException:
