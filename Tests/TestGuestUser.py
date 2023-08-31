@@ -1,15 +1,16 @@
-from conftest import *
+import allure
 from Pages.MainPage import MainPage
 from Utilities.AdditionalMethods import get_total_sum_for_product
 from Utilities.TestData import TestData
+from conftest import *
 
 
 class TestGuestUser():
     @staticmethod
     @pytest.mark.parametrize('data_set', TestData.random_data_set(2))             # тест прогоняется 2 раза по рандомным товарам
+    @allure.description("Выбор продукта, добавление его в корзину, проверка правильного отображения в корзине и на "
+                        "странице покупки")
     def test_select_product(set_up_guest, data_set):
-        """Тест-кейс: выбор продукта, добавление его в корзину, проверка правильного отображения в корзине и на странице
-        покупки"""
         main_page = MainPage(driver=set_up_guest)
 
         main_page.open_product_page(category_name=data_set["category"],

@@ -1,3 +1,4 @@
+import allure
 import datetime
 import os
 import time
@@ -7,7 +8,7 @@ from selenium import webdriver
 
 from Base.BaseClass import BaseClass
 from Pages.MainPage import MainPage
-from Utilities.AdditionalMethods import get_screenshot
+#from Utilities.AdditionalMethods import get_screenshot
 from Utilities.Settings import Settings
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
@@ -29,7 +30,7 @@ def set_up_logged():
 
     yield driver
 
-    get_screenshot(driver)                # делаем скриншот на случай, если тест упал
+#    get_screenshot(driver)                # делаем скриншот на случай, если тест упал
 
     driver.get(Settings.base_url)
     if mpg.read_number_of_products_in_cart() != '':       # проверка на наличие продуктов в корзине, оставшихся после прогона тестов
@@ -51,16 +52,16 @@ def set_up_guest():
 
     yield driver
 
-    get_screenshot(driver)                # делаем скриншот на случай, если тест упал
+#    get_screenshot(driver)                # делаем скриншот на случай, если тест упал
     driver.close()
 
 
-@pytest.fixture(scope='session', autouse=True)
-def teardown_session():
-    """Зачистка устаревших скриншотов"""
-    for filename in os.listdir(Settings.screenshot_folder):
-        file_creation_date = os.path.getmtime(Settings.screenshot_folder+filename)
-        file_creation_date_formatted = datetime.date.fromtimestamp(file_creation_date)
-        if file_creation_date_formatted < datetime.date.today():
-            os.remove(Settings.screenshot_folder+filename)
+# @pytest.fixture(scope='session', autouse=True)
+# def teardown_session():
+#     """Зачистка устаревших скриншотов"""
+#     for filename in os.listdir(Settings.screenshot_folder):
+#         file_creation_date = os.path.getmtime(Settings.screenshot_folder+filename)
+#         file_creation_date_formatted = datetime.date.fromtimestamp(file_creation_date)
+#         if file_creation_date_formatted < datetime.date.today():
+#             os.remove(Settings.screenshot_folder+filename)
 

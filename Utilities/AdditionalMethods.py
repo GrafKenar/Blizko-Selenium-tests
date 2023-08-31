@@ -9,7 +9,7 @@ def get_total_sum_for_product(product_price, additional_products):
     return formated_sum
 
 
-def get_screenshot(driver):
-    now_date = datetime.utcnow().strftime("%Y.%m.%d.%H.%M.%S")
-    name_screenshot = 'screenshot' + now_date + '.png'
-    driver.save_screenshot(Settings.screenshot_folder + name_screenshot)
+# def get_screenshot(driver):
+#     now_date = datetime.utcnow().strftime("%Y.%m.%d.%H.%M.%S")
+#     name_screenshot = 'screenshot' + now_date + '.png'
+#     driver.save_screenshot(Settings.screenshot_folder + name_screenshot)

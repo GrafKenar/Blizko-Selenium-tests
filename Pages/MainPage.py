@@ -1,3 +1,4 @@
+import allure
 from selenium.webdriver import ActionChains
 from Base.BaseClass import BaseClass
 from Pages.CartPage import CartPage
@@ -87,8 +88,8 @@ class MainPage(BaseClass):
         self.get_search_button().click()
 
     # methods
+    @allure.step("Открытие страницы каталога нужных категории и подкатегории")
     def open_product_page(self, category_name, sub_category_name):
-        """Открытие страницы каталога нужных категории и подкатегории"""
         self.click_catalog_button()
         print("\nМеню каталога открыто")
         self.click_category(category_name)

@@ -1,2 +1,5 @@
 **/.pytest_cache
 screenshots/
+**/__pycache__
+**/.idea
+**/test_results
