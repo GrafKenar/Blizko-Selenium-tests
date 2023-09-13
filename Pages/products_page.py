@@ -1,12 +1,13 @@
 import time
 
+import allure
 from selenium.common import NoSuchElementException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
-from Base.BaseClass import BaseClass
-from Pages.AddedToCartModal import AddedToCartModal
+from Base.base_class import BaseClass
+from Pages.added_to_cart_modal import AddedToCartModal
 
 
 class ProductsPage(BaseClass):
@@ -91,8 +92,8 @@ class ProductsPage(BaseClass):
         self.action.move_to_element(element).click().perform()
 
     # methods
+    @allure.step("Применение нужных фильтраций на список товаров")
     def aplly_all_filters(self, price_low, price_high, additional_filters):
-        """Применение нужных фильтраций на список товаров"""
         self.set_price_from(price_low)
         self.set_price_to(price_high)
 
@@ -107,8 +108,8 @@ class ProductsPage(BaseClass):
         self.action.move_to_element(self.get_category_name()).perform()  # хак для того, чтобы избежать всплывающих селекторов бокового меню
         return self
 
+    @allure.step("Нажатие на кнопку добавления товара в корзину, сохранение его значений и открытие промежуточного модала")
     def add_product_to_cart(self, product_id):
-        """Нажатие на кнопку добавления товара в корзину, сохранение его значений и открытие промежуточного модала"""
         self.delete_chat_button()                                       # удаление кнопки чата, чтобы она не мешала добавлять товар в корзину
         product_name = self.get_product_name(product_id).text
         product_price = self.get_product_price(product_id).text
@@ -119,12 +120,13 @@ class ProductsPage(BaseClass):
         return atc
 
     # asserts
+    @allure.step("Проверка того, что открылась страница нужной подкатегории товаров")
     def assert_category_name_is_correct(self, sub_category_name):
-        """Проверка того, что открылась страница нужной подкатегории товаров"""
         self.assert_element_name_is_correct(self.get_category_name(), sub_category_name)
         print(f"Открылась нужная страница подкатегории {sub_category_name}")
         return self
 
+    @allure.step("Проверка того, что нужный продукт находится на странице")
     def assert_product_is_present_on_the_page(self, product_id, expected_product_name):
         actual_product_name = self.get_product_name(product_id).text
         assert actual_product_name == expected_product_name

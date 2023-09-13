@@ -6,10 +6,10 @@ import time
 import pytest
 from selenium import webdriver
 
-from Base.BaseClass import BaseClass
-from Pages.MainPage import MainPage
-#from Utilities.AdditionalMethods import get_screenshot
-from Utilities.Settings import Settings
+from Base.base_class import BaseClass
+from Pages.main_page import MainPage
+from Utilities.additional_methods import get_screenshot
+from Utilities.settings import Settings
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 
@@ -30,7 +30,7 @@ def set_up_logged():
 
     yield driver
 
-#    get_screenshot(driver)                # делаем скриншот на случай, если тест упал
+    get_screenshot(driver)                # делаем скриншот на случай, если тест упал
 
     driver.get(Settings.base_url)
     if mpg.read_number_of_products_in_cart() != '':       # проверка на наличие продуктов в корзине, оставшихся после прогона тестов
@@ -38,6 +38,7 @@ def set_up_logged():
            .clean_up_all_added_products()         # удаление продуктов в корзине
 
     driver.close()
+
 
 @pytest.fixture()
 def set_up_guest():
@@ -52,16 +53,16 @@ def set_up_guest():
 
     yield driver
 
-#    get_screenshot(driver)                # делаем скриншот на случай, если тест упал
+    get_screenshot(driver)                # делаем скриншот на случай, если тест упал
     driver.close()
 
 
-# @pytest.fixture(scope='session', autouse=True)
-# def teardown_session():
-#     """Зачистка устаревших скриншотов"""
-#     for filename in os.listdir(Settings.screenshot_folder):
-#         file_creation_date = os.path.getmtime(Settings.screenshot_folder+filename)
-#         file_creation_date_formatted = datetime.date.fromtimestamp(file_creation_date)
-#         if file_creation_date_formatted < datetime.date.today():
-#             os.remove(Settings.screenshot_folder+filename)
+@pytest.fixture(scope='session', autouse=True)
+def teardown_session():
+    """Зачистка устаревших скриншотов"""
+    for filename in os.listdir(Settings.screenshot_folder):
+        file_creation_date = os.path.getmtime(Settings.screenshot_folder+filename)
+        file_creation_date_formatted = datetime.date.fromtimestamp(file_creation_date)
+        if file_creation_date_formatted < datetime.date.today():
+            os.remove(Settings.screenshot_folder+filename)
 

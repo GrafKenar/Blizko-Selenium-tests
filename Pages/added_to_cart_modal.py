@@ -1,10 +1,12 @@
-from Base.BaseClass import BaseClass
-from Pages.CartPage import CartPage
+import allure
+
+from Base.base_class import BaseClass
+from Pages.cart_page import CartPage
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from Utilities.Settings import Settings
-from Utilities.AdditionalMethods import get_total_sum_for_product
+from Utilities.settings import Settings
+from Utilities.additional_methods import get_total_sum_for_product
 
 
 class AddedToCartModal(BaseClass):
@@ -50,43 +52,43 @@ class AddedToCartModal(BaseClass):
         self.get_close_modal_button().click()
 
     # methods
+    @allure.step("Цена товара умножается на его количество и преобразуется в значение, которое будет сравниваться")
     def count_final_price(self, times):
-        """Цена товара умножается на его количество и преобразуется в значение, которое будет сравниваться"""
         price = float(self.product_price.replace(' ', ''))
         self.final_price = get_total_sum_for_product(price, times)
         print(f"Итогая стоимость выбранного количества товара - {self.final_price}")
 
+    @allure.step("Добавление дополнительных единиц товара times раз")
     def add_more_units_of_product(self, times):
-        """Добавление дополнительных единиц товара times раз"""
         for _time in range(times):
             self.click_add_more_product_button()
         print(f"Добавлено дополнительно еще {times} единиц товара")
         self.count_final_price(times)
         return self
 
+    @allure.step("Переход из промежуточного модала в корзину")
     def go_to_cart_from_modal(self):
-        """Переход из промежуточного модала в корзину"""
         self.click_go_to_cart_button()
         cp = CartPage(self.driver, product_price=self.final_price, product_name=self.product_name)
         print("Переход в корзину")
         return cp
 
+    @allure.step("Ожидание правильного отображения итоговой суммы")
     def wait_until_correct_price_is_displayed(self):
-        """Ожидание правильного отображения итоговой суммы"""
         try:
             WebDriverWait(self.driver, 4).until(EC.text_to_be_present_in_element(locator=(By.XPATH, self.product_total_price), text_=self.final_price))
         except:
             exception = Exception("PriceIsWrong")
             raise exception
 
+    @allure.step("Закрытие модала и возвращение на главную страницу")
     def close_modal_and_go_to_main_page(self):
-        """Закрытие модала и возвращение на главную страницу"""
         self.click_close_modal_button()
         self.driver.get(Settings.base_url)
 
     # asserts
+    @allure.step("Проверка правильности товара и корректной стоимости выбранного количества единиц товара")
     def assert_product_and_sum_in_modal_is_correct(self):
-        """Проверка правильности товара и корректной стоимости выбранного количества единиц товара"""
         assert self.product_name == self.get_product_name().text
         self.wait_until_correct_price_is_displayed()
         print("Наименование товара и стоимость отображаются корректно в промежуточном модале")

@@ -1,12 +1,13 @@
 import allure
 from selenium.webdriver import ActionChains
-from Base.BaseClass import BaseClass
-from Pages.CartPage import CartPage
-from Pages.LoginModal import LoginModal
-from Pages.ProductsPage import ProductsPage
+from Base.base_class import BaseClass
+from Pages.cart_page import CartPage
+from Pages.login_modal import LoginModal
+from Pages.products_page import ProductsPage
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+
 
 class MainPage(BaseClass):
     """Класс, описывающий основную страницу приложения"""
@@ -99,18 +100,19 @@ class MainPage(BaseClass):
         lp = ProductsPage(self.driver)
         return lp
 
+    @allure.step("Переход в корзины из главной страницы")
     def enter_cart(self):
-        """Переход в корзины из главной страницы"""
         self.click_cart_button()
         cp = CartPage(self.driver)
         return cp
 
+    @allure.step("Открытие модала авторизации")
     def enter_login_modal(self):
-        """Открытие модала авторизации"""
         self.click_login_button()
         lp = LoginModal(self.driver)
         return lp
 
+    @allure.step("Поиск по названию продукта")
     def search_by_query(self, query):
         self.enter_search_query(query)
         self.click_search_button()

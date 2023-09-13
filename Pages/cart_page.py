@@ -1,5 +1,7 @@
-from Base.BaseClass import BaseClass
-from Pages.FinalBuyPage import FinalBuyPage
+import allure
+
+from Base.base_class import BaseClass
+from Pages.final_buy_page import FinalBuyPage
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -46,28 +48,28 @@ class CartPage(BaseClass):
             button.click()
 
     # methods
+    @allure.step("Переход на страницу оформления заказа")
     def go_to_final_buy_page(self):
-        """Переход на страницу оформления заказа"""
         self.click_go_to_buy_page_button()
         print("Переход на страницу оформления заказа")
         fbp = FinalBuyPage(self.driver, product_price=self.product_price, product_name=self.product_name)
         return fbp
 
+    @allure.step("Удаление всех продуктов, которые есть в корзине")
     def clean_up_all_added_products(self):
-        """Удаление всех продуктов, которые есть в корзине"""
         self.click_all_delete_product_buttons()
         print("\nВсе товары удалены из корзины")
 
     # asserts
+    @allure.step("Проверка правильности товара и корректной стоимости выбранного количества единиц товара")
     def assert_product_and_price_in_cart_is_correct(self):
-        """Проверка правильности товара и корректной стоимости выбранного количества единиц товара"""
         assert self.product_price == self.get_cart_page_product_price().text
         assert self.product_name == self.get_cart_page_product_name().text
         print("Товар и его стоимость отображаются в корзине корректно")
         return self
 
+    @allure.step("Проверка правильности итоговыъ сумм для всех продуктов в корзине")
     def assert_total_prices_for_all_products_are_correct(self, product_details):
-        """Проверка правильности итоговыъ сумм для всех продуктов в корзине"""
         for product in product_details:
             assert self.get_cart_product_total_sum(product).text == product_details[product]
             print(f"\nИнформация для продукта {product} отображается верно")

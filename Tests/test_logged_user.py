@@ -1,17 +1,19 @@
-import allure
-from Pages.MainPage import MainPage
-from Utilities.AdditionalMethods import get_total_sum_for_product
-from Utilities.TestData import TestData
 from conftest import *
+from Pages.main_page import MainPage
+from Utilities.additional_methods import get_total_sum_for_product
+from Utilities.test_data import TestData
 
 
-class TestGuestUser():
+@allure.description("Проверки для авторизованного пользователя")
+class TestLoggedUser():
     @staticmethod
-    @pytest.mark.parametrize('data_set', TestData.random_data_set(2))             # тест прогоняется 2 раза по рандомным товарам
+    @pytest.mark.parametrize('data_set',  TestData.random_data_set(2))             # тест прогоняется 2 раза по рандомным товарам
     @allure.description("Выбор продукта, добавление его в корзину, проверка правильного отображения в корзине и на "
                         "странице покупки")
-    def test_select_product(set_up_guest, data_set):
-        main_page = MainPage(driver=set_up_guest)
+    def test_select_product(set_up_logged, data_set):
+        """Тест-кейс: выбор продукта, добавление его в корзину, проверка правильного отображения в корзине и на странице
+        покупки"""
+        main_page = MainPage(driver=set_up_logged)
 
         main_page.open_product_page(category_name=data_set["category"],
                                     sub_category_name=data_set["sub_category"])\
@@ -28,9 +30,10 @@ class TestGuestUser():
             .assert_product_and_price_in_final_page_is_correct()
 
     @staticmethod
-    def test_select_two_products(set_up_guest, data_sets=TestData.random_data_set(2)):            # для теста берется 2 рандомных товара
+    @allure.description("Выбор 2 продуктов и добавление их в корзину, проверка правильного отображения в корзине")
+    def test_select_two_products(set_up_logged, data_sets=TestData.random_data_set(2)):            # для теста берется 2 рандомных товара
         """Тест-кейс: выбор 2 продуктов и добавление их в корзину, проверка правильного отображения в корзине"""
-        main_page = MainPage(driver=set_up_guest)
+        main_page = MainPage(driver=set_up_logged)
 
         products_details = {}
 
@@ -53,10 +56,14 @@ class TestGuestUser():
                                                                                               # общая покупка продуктов невозможна, поэтому здесь тест заканчивается
 
     @staticmethod
+    @allure.description("Поиск по наименованию продукта, проверка наличия на возвращаемой странице")
     @pytest.mark.parametrize('data_set',  TestData.random_data_set(1))
-    def test_find_product_by_search(set_up_guest, data_set):
-        main_page = MainPage(driver=set_up_guest)
+    def test_find_product_by_search(set_up_logged, data_set):
+        main_page = MainPage(driver=set_up_logged)
 
         main_page.search_by_query(query=data_set["product_name"])\
                  .assert_product_is_present_on_the_page(product_id=data_set["product_id"],
                                                         expected_product_name=data_set["product_name"])
+
+
+

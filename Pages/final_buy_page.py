@@ -1,4 +1,6 @@
-from Base.BaseClass import BaseClass
+import allure
+
+from Base.base_class import BaseClass
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -24,14 +26,14 @@ class FinalBuyPage(BaseClass):
         return WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.XPATH, self.product_name_on_final_page)))
 
     # methods
+    @allure.step("Проверка правильности товара и корректной стоимости выбранного количества единиц товара")
     def assert_product_and_price_in_final_page_is_correct(self):
-        """Проверка правильности товара и корректной стоимости выбранного количества единиц товара"""
         assert self.product_price == self.get_total_sum().text
         assert self.product_name == self.get_product_name().text
         print("Товар и его стоимость отображаются на странице оформления заказа корректно")
         return self
 
+    @allure.step("Проверка правильности товара и корректной стоимости выбранного количества единиц товара")
     def assert_total_price_in_final_page_is_correct(self, total_price):
-        """Проверка правильности товара и корректной стоимости выбранного количества единиц товара"""
         assert total_price == self.get_total_sum().text
         return self

@@ -1,4 +1,6 @@
-from Base.BaseClass import BaseClass
+import allure
+
+from Base.base_class import BaseClass
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -35,8 +37,8 @@ class LoginModal(BaseClass):
         self.get_enter_button().click()
 
     # methods
+    @allure.step("Ввод логина и пароля в модале авторизации")
     def log_in_application(self, email, password):
-        """Ввод логина и пароля в модале авторизации"""
         self.enter_email(email)
         self.enter_password(password)
         self.click_enter_button()
